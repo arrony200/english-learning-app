@@ -35,6 +35,8 @@ class SentenceController extends Controller
 
         Sentence::create($request->only('word_id', 'user_sentence'));
 
-        return back()->with('success', 'Sentence saved successfully!');
+        $redirectTo = $request->input('redirect_to', route('sentences.history'));
+
+        return redirect($redirectTo)->with('success', 'Sentence saved successfully!');
     }
 }

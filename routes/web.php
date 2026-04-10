@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/sentences', [SentenceController::class, 'store'])->name('sentences.store');
 
     Route::get('/words', [WordController::class, 'index'])->name('words.index');
+    Route::get('/words/random', [WordController::class, 'random'])->name('words.random');
     Route::get('/words/today', [WordController::class, 'today'])->name('words.today');
     Route::get('/words/create', [WordController::class, 'create'])->name('words.create');
     Route::post('/words', [WordController::class, 'store'])->name('words.store');

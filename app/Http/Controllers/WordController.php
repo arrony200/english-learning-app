@@ -21,6 +21,26 @@ class WordController extends Controller
         return view('words.today', compact('words'));
     }
 
+    public function random(Request $request)
+    {
+        $exclude = $request->exclude ? explode(',', $request->exclude) : [];
+
+        $word = Word::when($exclude, fn($q) => $q->whereNotIn('id', $exclude))
+                    ->inRandomOrder()
+                    ->first();
+
+        // All words exhausted — reset
+        if (! $word) {
+            $exclude = [];
+            $word = Word::inRandomOrder()->first();
+        }
+
+        $seen = array_merge($exclude, $word ? [$word->id] : []);
+        $total = Word::count();
+
+        return view('words.random', compact('word', 'seen', 'total'));
+    }
+
     public function create()
     {
         return view('words.create');
